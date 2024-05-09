@@ -24,6 +24,7 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
@@ -35,6 +36,7 @@ import org.jetbrains.annotations.Nullable;
 
 import com.adobe.aemds.guide.common.GuideContainer;
 import com.adobe.aemds.guide.service.GuideSchemaType;
+import com.adobe.aemds.guide.utils.AdobeSignerPropertiesUtils;
 import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.aemds.guide.utils.GuideUtils;
 import com.adobe.aemds.guide.utils.GuideWCMUtils;
@@ -54,6 +56,7 @@ import com.day.cq.commons.LanguageUtil;
 import com.day.cq.wcm.api.Page;
 import com.day.cq.wcm.api.PageManager;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 @Model(
     adaptables = { SlingHttpServletRequest.class, Resource.class },
@@ -288,6 +291,14 @@ public class FormContainerImpl extends AbstractContainerImpl implements FormCont
     @Override
     public String getLanguageDirection() {
         return GuideUtils.getLanguageDirection(getLang());
+    }
+
+    @Override
+    @JsonIgnore
+    @Nullable
+    public Map<String, Object> getSignerProperties() throws JSONException, JsonProcessingException {
+        AdobeSignerPropertiesUtils adobeSignerProperties = new AdobeSignerPropertiesUtils();
+        return adobeSignerProperties.getSignerProperties(resource);
     }
 
     @Override

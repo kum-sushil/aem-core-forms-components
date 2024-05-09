@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import org.apache.sling.commons.json.JSONException;
 import org.jetbrains.annotations.Nullable;
 import org.osgi.annotation.versioning.ConsumerType;
 
@@ -27,6 +28,7 @@ import com.adobe.aemds.guide.utils.GuideConstants;
 import com.adobe.cq.export.json.ComponentExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * Defines the form container {@code FormContainer} Sling Model used for the {@code /apps/core/fd/components/form/formcontainer} component.
@@ -348,6 +350,10 @@ public interface FormContainer extends Container {
      */
     @JsonIgnore
     default void setContextPath(String contextPath) {}
+
+    @JsonIgnore
+    @Nullable
+    Map<String, Object> getSignerProperties() throws JsonProcessingException, JSONException;
 
     @JsonIgnore
     default void visit(Consumer<ComponentExporter> callback) throws Exception {}

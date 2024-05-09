@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.sling.api.SlingHttpServletRequest;
 import org.apache.sling.api.resource.Resource;
+import org.apache.sling.commons.json.JSONException;
 import org.apache.sling.models.annotations.Default;
 import org.apache.sling.models.annotations.Exporter;
 import org.apache.sling.models.annotations.Model;
@@ -49,6 +50,7 @@ import com.day.cq.dam.api.Asset;
 import com.day.cq.wcm.foundation.model.export.AllowedComponentsExporter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -122,6 +124,11 @@ public class FormContainerImpl extends AbstractComponentImpl implements FormCont
     @Nullable
     public String getFormData() {
         return data;
+    }
+
+    @Override
+    public @Nullable Map<String, Object> getSignerProperties() throws JsonProcessingException, JSONException {
+        return null;
     }
 
     @Override
